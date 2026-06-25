@@ -21,6 +21,7 @@ class IdentityService:
         profile = matched[0] if matched else CustomerProfile()
         for other in matched[1:]:
             self._merge(profile, other)
+            self.repository.remove_profile(other.id)
         for key, values in incoming.items():
             profile.identifiers.setdefault(key, set()).update(values)
         profile.updated_at = utcnow()

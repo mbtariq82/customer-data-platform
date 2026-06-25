@@ -47,6 +47,10 @@ class CustomerRepository:
         with self._lock:
             return list(self._profiles.values())
 
+    def remove_profile(self, profile_id: str) -> None:
+        with self._lock:
+            self._profiles.pop(profile_id, None)
+
     def save_segment(self, segment: Segment) -> Segment:
         with self._lock:
             self._segments[segment.id] = segment
