@@ -51,7 +51,7 @@ def create_app(repository: CustomerRepository | None = None) -> FastAPI:
         if isinstance(exc, NotFoundError):
             status_code = status.HTTP_404_NOT_FOUND
         elif isinstance(exc, ValidationError):
-            status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+            status_code = status.HTTP_422_UNPROCESSABLE_CONTENT
         return JSONResponse(status_code=status_code, content={"detail": str(exc)})
 
     @app.get("/health", response_model=HealthResponse)
