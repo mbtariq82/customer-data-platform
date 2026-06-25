@@ -1,8 +1,40 @@
-# customer-data-platform
-1) Build an event ingestion API: accept user activity events (page views, clicks, purchases) with schema validation, buffer in a queue, and write to a data store in batches.
+# Customer Data Platform
 
-2) Implement identity resolution: merge events from anonymous and authenticated sessions, handle multiple identifiers (email, phone, cookie), and maintain a unified customer profile.
+Training implementation of a customer data platform. It supports event
+ingestion, identity resolution, segmentation, consent changes, export, deletion,
+and audit logging.
 
-3) Create a segmentation engine: define segments using rules (purchased in last 30 days AND viewed category X), evaluate membership in real-time on event ingestion, and expose via API.
+## Features
 
-4) Build a GDPR compliance module: handle data subject requests (export all data, delete all data), track consent changes, implement data retention policies, and maintain audit logs.
+- Validate and ingest page view, click, purchase, and consent events.
+- Resolve profiles across anonymous IDs, email, phone, and cookie identifiers.
+- Buffer events and flush them to an in-memory data store in batches.
+- Define segments with simple rules over events and properties.
+- Export or delete subject data and maintain audit entries for compliance.
+
+## Run locally
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install -e ".[dev]"
+uvicorn customer_data_platform.main:app --reload
+```
+
+Open `http://127.0.0.1:8000/docs` for interactive API docs.
+
+## Test
+
+```bash
+pytest
+```
+
+## Key endpoints
+
+- `POST /events`
+- `GET /profiles/{profile_id}`
+- `POST /segments`
+- `POST /profiles/{profile_id}/segments/evaluate`
+- `POST /profiles/{profile_id}/consent`
+- `GET /profiles/{profile_id}/export`
+- `DELETE /profiles/{profile_id}`
