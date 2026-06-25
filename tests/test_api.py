@@ -9,7 +9,7 @@ from customer_data_platform.main import create_app
 
 def test_api_ingests_event_evaluates_segment_and_exports_profile() -> None:
     client = TestClient(create_app())
-    now = datetime(2026, 6, 25, tzinfo=UTC)
+    now = datetime.now(UTC)
     event = client.post(
         "/events",
         json={
